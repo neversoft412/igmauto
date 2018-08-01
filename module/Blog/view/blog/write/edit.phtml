@@ -1,0 +1,16 @@
+<?php
+/**
+ * @var \Blog\Form\PostForm $form
+ */
+?>
+    <h1><?= $this->translate('Edit blog post') ?></h1>
+<?php
+$form->setAttribute('action', $this->url('blog/editPost'));
+$form->setAttribute('id', 'postForm');
+echo $this->partial(
+    'blog/write/form',
+    [
+        'form' => $form,
+        'submitLabel' => $this->translate('Edit post'),
+    ]
+);

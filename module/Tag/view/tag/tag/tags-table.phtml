@@ -1,0 +1,56 @@
+<?php
+/**
+ * @var \Tag\Entity\Tag[] $tags
+ * @var string            $localization
+ * @var bool              $isUserLogged
+ */
+?>
+<h1><?= $this->translate('All tags') ?></h1>
+
+<table class="table">
+    <thead class="thead-dark">
+    <tr>
+        <th><?= $this->translate('Tag name') ?></th>
+        <th class="text-center"><?= $this->translate('Actions') ?></th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php foreach ($tags as $tag) : ?>
+        <tr>
+            <td><?= $tag->getName() ?></td>
+            <td class="col-lg-3 col-md-5 col-sm-5 col-xs-6 text-center">
+                <div class="btn-group btn-group-sm" role="group" aria-label="Tag actions">
+                    <a class="btn btn-warning"
+                       href="<?= $this->url(
+                           'tag/view',
+                           [
+                               'localization' => $localization,
+                               'id' => $tag->getId(),
+                           ]
+                       ) ?>">
+                        <?= $this->translate('View') ?>
+                    </a>
+                    <?php if ($isUserLogged) : ?>
+                        <a class="btn btn-default"
+                           href="<?= $this->url(
+                               'tag/edit',
+                               [
+                                   'localization' => $localization,
+                                   'id' => $tag->getId(),
+                               ]
+                           ) ?>">
+                            <?= $this->translate('Edit') ?>
+                        </a>
+                        <button class="btn btn-danger delete-tag-button"
+                                data-tag-id="<?= $tag->getId() ?>"
+                                data-delete-url="<?= $this->url('tag/deleteTag') ?>"
+                                data-confirm-text="<?= $this->translate('Are you sure you want to delete this?') ?>">
+                            <?= $this->translate('Delete') ?>
+                        </button>
+                    <?php endif; ?>
+                </div>
+            </td>
+        </tr>
+    <?php endforeach ?>
+    </tbody>
+</table>

@@ -1,0 +1,68 @@
+<?php
+/**
+ * @var PostForm $form
+ */
+
+use Blog\Form\PostForm;
+use Blog\Form\PostLanguageFieldset;
+
+/** @var \Zend\Form\Element\Collection $collection */
+$collection = $form->get(PostLanguageFieldset::POST_LANGUAGE);
+
+$tags = $form->get(PostForm::TAGS);
+$tags->setAttributes(
+    [
+        'class' => 'form-control',
+        'size' => 8,
+    ]
+);
+
+$submit = $form->get(PostForm::SUBMIT);
+$submit->setValue($this->submitLabel);
+$submit->setAttribute('class', 'btn btn-primary');
+
+$form->prepare();
+
+echo $this->form()->openTag($form);
+?>
+
+    <fieldset>
+        <?php foreach ($collection as $fieldset): ?>
+            <fieldset>
+                <div class="form-group">
+                    <?php
+                    /** @var \Zend\Form\Element $element */
+                    foreach ($fieldset as $element):
+                        $element->setAttribute('class', 'form-control');
+                        if (get_class($element) === \Zend\Form\Element\Textarea::class) {
+                            $element->setAttribute('rows', 4);
+                        }
+                        ?>
+                        <?= $this->formRow($element) ?>
+                    <?php endforeach; ?>
+                </div>
+            </fieldset>
+        <?php endforeach; ?>
+
+        <div class="row">
+            <div class="form-group col-sm-6 col-xs-12">
+                <fieldset>
+                    <legend><?= $this->translate($tags->getLabel()) ?></legend>
+                    <?= $this->formElement($tags) ?>
+
+                </fieldset>
+            </div>
+
+            <?php if ($form->has(PostForm::CAPTCHA)) : ?>
+                <div class="form-group col-sm-6 col-xs-12">
+                    <?= $this->formRow($form->get(PostForm::CAPTCHA)) ?>
+                    <p class="help-block"><?= $this->translate('Enter the letters above as you see them') ?></p>
+                </div>
+            <?php endif; ?>
+        </div>
+    </fieldset>
+
+<?php
+echo $this->formSubmit($submit);
+echo $this->formHidden($form->get(PostForm::ID));
+echo $this->form()->closeTag();

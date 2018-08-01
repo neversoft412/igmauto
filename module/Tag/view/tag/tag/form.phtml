@@ -1,0 +1,35 @@
+<?php
+/**
+ * @var TagForm $form
+ */
+
+use Tag\Form\TagForm;
+
+$name = $form->get(TagForm::NAME);
+$name->setAttributes(
+    [
+        'class' => 'form-control',
+        'placeholder' => 'Tag name',
+    ]
+);
+
+$submit = $form->get(TagForm::SUBMIT);
+$submit->setValue($this->submitLabel);
+$submit->setAttribute('class', 'btn btn-primary');
+
+$form->prepare();
+
+echo $this->form()->openTag($form);
+?>
+
+    <fieldset>
+        <legend><?= $this->fieldsetName ?></legend>
+        <div class="form-group">
+            <?= $this->formRow($name) ?>
+        </div>
+    </fieldset>
+
+<?php
+echo $this->formSubmit($submit);
+echo $this->formHidden($form->get(TagForm::ID));
+echo $this->form()->closeTag();

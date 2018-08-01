@@ -1,0 +1,36 @@
+<?php
+/**
+ * @var \Tag\Form\TagForm $form
+ * @var \Tag\Entity\Tag[] $tags
+ * @var string            $localization
+ * @var bool              $isUserLogged
+ */
+
+$this->headTitle(
+    $this->translate('Editing tag')
+);
+
+$form->setAttributes(
+    [
+        'action' => $this->url('tag/editTag'),
+        'id' => 'tagForm',
+    ]
+);
+
+echo $this->partial(
+    'tag/tag/form',
+    [
+        'form' => $form,
+        'submitLabel' => $this->translate('Edit tag'),
+        'fieldsetName' => $this->translate('Editing tag'),
+    ]
+);
+
+echo $this->partial(
+    'tag/tag/tags-table',
+    [
+        'tags' => $tags,
+        'localization' => $localization,
+        'isUserLogged' => $isUserLogged,
+    ]
+);

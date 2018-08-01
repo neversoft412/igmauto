@@ -1,0 +1,28 @@
+<?php
+/**
+ * @var Tag\Entity\Tag $tag
+ * @var string         $localization
+ * @var bool           $isUserLogged
+ */
+
+$this->headTitle(
+    $this->translate('View tag') . ' - ' . $tag->getName()
+);
+?>
+
+<h1>
+    <?= $this->translate('View tag') . ' - ' ?>
+    <i>
+        <?= $tag->getName() ?>
+    </i>
+</h1>
+
+<?= $this->partial(
+    'blog/partial/blog-list',
+    [
+        'posts' => $tag->getPosts(),
+        'localization' => $localization,
+        'isUserLogged' => $isUserLogged,
+    ]
+) ?>
+

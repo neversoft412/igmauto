@@ -1,0 +1,28 @@
+<?php
+/**
+ * @var array $pages
+ */
+?>
+<ul class="breadcrumb">
+    <?php
+    /**
+     * @var int $key
+     * @var Zend\Navigation\Page\Mvc $page
+     */
+    foreach ($pages as $key => $page):
+        ?>
+        <li>
+            <?php
+            // if this isn't the last page, add a link and the separator:
+            if ($key < count($pages) - 1):
+                ?>
+                <a href="<?= $this->url($page->getRoute(), ['localization' => $page->getRouteMatch()->getParam('localization')]) ?>"><?= $this->translate($page->getLabel()) ?></a>
+            <?php
+            // otherwise, output the name only:
+            else:
+                ?>
+                <?= $this->translate($page->getLabel()) ?>
+            <?php endif; ?>
+        </li>
+    <?php endforeach; ?>
+</ul>

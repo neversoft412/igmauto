@@ -1,0 +1,39 @@
+<?php
+/**
+ * @var \Blog\Entity\Post $post
+ * @var string            $localization
+ */
+
+use Tag\Entity\Tag;
+
+$postLanguage = $post->getPostLanguage($localization);
+?>
+<h1><?= $this->translate('Post Details') ?></h1>
+
+<dl>
+    <dt><?= $this->translate('Post Title') ?></dt>
+    <dd><?= $this->escapeHtml($postLanguage->getTitle()) ?></dd>
+
+    <dt><?= $this->translate('Post Text') ?></dt>
+    <dd><?= $this->escapeHtml($postLanguage->getText()) ?></dd>
+</dl>
+
+<hr>
+
+<strong><?= $this->translate('Tags') ?>:</strong>
+
+<?php
+/** @var Tag $tag */
+foreach ($post->getTags() as $key => $tag) : ?>
+    <?= $key ? '|' : null ?>
+    <i>
+        <a href="<?= $this->url(
+            'tag/view',
+            ['localization' => $localization, 'id' => $tag->getId()]
+        ) ?>">
+            <?= $tag->getName() ?>
+        </a>
+    </i>
+<?php endforeach; ?>
+
+

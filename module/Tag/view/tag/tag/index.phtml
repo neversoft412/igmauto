@@ -1,0 +1,38 @@
+<?php
+/**
+ * @var \Tag\Form\TagForm $form
+ * @var \Tag\Entity\Tag[] $tags
+ * @var string            $localization
+ * @var bool              $isUserLogged
+ */
+
+$this->headTitle(
+    $this->translate('All tags')
+);
+
+if ($isUserLogged) :
+    $form->setAttributes(
+        [
+            'action' => $this->url('tag/addTag'),
+            'id' => 'tagForm',
+        ]
+    );
+
+    echo $this->partial(
+        'tag/tag/form',
+        [
+            'form' => $form,
+            'submitLabel' => $this->translate('Add new tag'),
+            'fieldsetName' => $this->translate('New tag'),
+        ]
+    );
+endif;
+
+echo $this->partial(
+    'tag/tag/tags-table',
+    [
+        'tags' => $tags,
+        'localization' => $localization,
+        'isUserLogged' => $isUserLogged,
+    ]
+);

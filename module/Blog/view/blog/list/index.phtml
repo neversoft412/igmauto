@@ -1,0 +1,28 @@
+<?php
+/**
+ * @var Blog\Entity\Post[] $posts
+ * @var string             $localization
+ * @var bool               $isUserLogged
+ */
+$this->headTitle(
+    $this->translate('All posts')
+);
+?>
+<h1><?= $this->translate('All posts') ?></h1>
+
+<?= $this->partial(
+    'blog/partial/blog-list',
+    [
+        'posts' => $posts,
+        'localization' => $localization,
+        'isUserLogged' => $isUserLogged,
+    ]
+) ?>
+
+<?php if ($isUserLogged) : ?>
+    <div class="btn-group" role="group" aria-label="Post actions">
+        <a class="btn btn-primary" href="<?= $this->url('blog/add', ['localization' => $localization]) ?>">
+            <?= $this->translate('Write new post') ?>
+        </a>
+    </div>
+<?php endif; ?>
